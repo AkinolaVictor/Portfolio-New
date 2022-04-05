@@ -1,21 +1,20 @@
 <template>
 <div class="eachProject">
     <div class="image">
-        <!-- <i class="fa-brands fa-js-square"></i>
-        <p>Javascript</p> -->
+        <img :src="image" alt="" style="width:200px; height: 120px; border-top-right-radius: 10px; border-top-left-radius: 10px;" />
     </div>
     <div class="details">
-        <h4 class="name">Timer App</h4>
-        <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Recusandae dignissimos quidem, voluptate enim ea nam.</span>
+        <h4 class="name">{{name}}</h4>
+        <span>{{content}}</span>
     </div>
-    <button>Open</button>
+    <a  target="_blank" :href="link"><button>open</button></a>
 </div>
 </template>
 
 <script>
 
 export default {
-    props:['image', 'content', 'style']
+    props:['name', 'content', 'link', 'image']
 }
 </script>
 
@@ -43,7 +42,7 @@ export default {
         flex-direction: column;
         width: 100%;
         height: 120px;
-        background: #4949F3;
+        background: #ED4AFF;
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
 
@@ -64,29 +63,34 @@ export default {
         // font-family: 'Outfit', sans-serif;
         text-align: justify;
         // word-spacing:12px;
-        word-break: break-all;
+        // word-break: break-all;
         padding: 0 10px 10px 10px;
 
         h4{
             margin-top: 5px;
         }
     }
+    
+    a{
+        text-decoration: none;
 
-    button{
-        font-size: 10px;
-        padding: 4px 10px;
-        border: none;
-        background: #4949F3;
-        margin-bottom: 10px;
-        border-radius: 4px;
-        color: white;
+        button{
+            font-size: 10px;
+            padding: 4px 10px;
+            border: none;
+            background: #ED4AFF;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            color: white;
 
-        
-        &:hover{
-            background: #cfe091;
-            cursor: pointer;
-            color: black;
-            transition: .7s all;
+
+            
+            &:hover{
+                background: #cfe091;
+                cursor: pointer;
+                color: black;
+                transition: .7s all;
+            }
         }
     }
 

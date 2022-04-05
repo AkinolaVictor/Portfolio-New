@@ -1,17 +1,17 @@
 <template>
 <div class="eachskill">
     <div class="icon">
-        <i class="fa-brands fa-js-square"></i>
-        <p>Javascript</p>
+        <i :class="font"></i>
+        <p>{{name}}</p>
     </div>
-    <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Recusandae dignissimos quidem, voluptate enim ea nam.</span>
+    <span>{{content}}</span>
 </div>
 </template>
 
 <script>
 
 export default {
-    props:['image', 'content', 'style']
+    props:['font', 'name', 'content']
 }
 </script>
 
@@ -56,7 +56,7 @@ export default {
         // font-family: 'Outfit', sans-serif;
         text-align: justify;
         // word-spacing:12px;
-        word-break: break-all;
+        // word-break: break-all;
     }
 
 }

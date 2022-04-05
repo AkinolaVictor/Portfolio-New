@@ -1,7 +1,7 @@
 <template>
-<div class="eachProject">
+<div class="eachAbout">
     <div class="image">
-        <p>Education</p>
+        <p>{{name}}</p>
     </div>
     <div class="details">
         <!-- <h4 class="name">Timer App</h4> -->
@@ -14,12 +14,12 @@
 <script>
 
 export default {
-    props:['texts', 'content', 'style']
+    props:['texts', 'name']
 }
 </script>
 
 <style lang='scss' scoped>
-.eachProject{
+.eachAbout{
     width: 200px;
     // max-width: 250px;
     height: auto;
@@ -66,7 +66,7 @@ export default {
         // font-family: 'Outfit', sans-serif;
         text-align: justify;
         // word-spacing:12px;
-        word-break: break-all;
+        // word-break: break-all;
         padding: 0 10px 10px 10px;
 
         h4{

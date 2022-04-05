@@ -1,10 +1,10 @@
 <template>
     <div class="carousel-container">
-        <div class="carousel-text">
+        <!-- <div class="carousel-text">
             <p class="description1">{{description.a}}</p>
             <p class="description2">{{description.b}}</p>
             <p class="description3">{{description.c}}</p>
-        </div>
+        </div> -->
         <EachSlide :style="eachslide" :image='image'/>
         <div class="controller">
             <i @click="quickShift('-')" class="fa fa-caret-left" aria-hidden="true"></i>
@@ -22,11 +22,12 @@ let timer;
 import EachSlide from './EachSlide.vue'
 export default {
   components: { EachSlide },
+  props: ['data'],
   data(){
       return {
           eachslide: 'eachslide',
           imgNumber: 1,
-          image: `/imgs/img1.jpg`,
+          image: `/carousel/mobile/img1.jpg`,
           play: true,
           description: {
               a: 'Hello!!!',
@@ -35,7 +36,22 @@ export default {
           }
       }
   },
+  computed: {
+    // image: {
+    //   get () {
+    //     //   console.log(screen.width <= 768);
+    //     return screen.width<=768? '/carousel/mobile/img1.jpg': '/carousel/desktop/img1.jpg'
+    //     // return `${this.firstName}`
+    //   },
+    //   set (fullName) {
+    //     this.image = fullName
+    //   }
+    // }
+  },
   methods: {
+      setImage(){
+          this.image = screen.width<=768? '/carousel/mobile/img1.jpg': '/carousel/desktop/img1.jpg';
+      },
       texts: function(){
           const descriptions = {
               caption1: {
@@ -70,19 +86,14 @@ export default {
           this.description.a = selected.a
           this.description.b = selected.b
           this.description.c = selected.c
-          
-        //   this.description.a = descriptions[`caption${val}`].a
-        //   this.description.b = descriptions[`caption${val}`].b
-        //   this.description.c = descriptions[`caption${val}`].c
-
-        console.log(selected.a);
       },
       changeSlide: function(val) {
           if (val===undefined)  this.imgNumber<5?this.imgNumber++: this.imgNumber = 1;
           else this.imgNumber = val
-          this.image = `/imgs/img${this.imgNumber}.jpg`
+          this.image = screen.width<=768? `/carousel/mobile/img${this.imgNumber}.jpg`: `/carousel/desktop/img${this.imgNumber}.jpg`
+        //   this.image = `/carousel/desktop/img${this.imgNumber}.jpg`
           this.texts();
-        //   console.log(this.imgNumber);
+        //   console.log(this.image);
       },
       timeCount: function(){
         timer = setInterval(this.changeSlide, 5000)
@@ -107,6 +118,7 @@ export default {
   },
   mounted(){
       this.timeCount()
+      this.setImage()
     //   this.texts(3);
   }
 }
@@ -131,6 +143,7 @@ export default {
         top: 140px;
         left: 20px;
         text-align: start;
+        color: white;
 
         .description1{
             font-size: 50px;

@@ -3,6 +3,7 @@
     <Header />
     <!-- <h3 style="padding-top: 90px">{{$route.name}}</h3> -->
     <div class="routeView">
+    <!-- <p>https://bstrategyhub.com/</p> -->
       <router-view />
       <Footer />
     </div>
@@ -25,7 +26,7 @@ export default {
   
   methods: {
     fetchAPI: function(){
-      axios.get('http://localhost:3000/data')
+      axios.get('http://localhost:3000/about')
       .then(res=>{
         console.log(res.data);
         this.api = res.data
@@ -47,6 +48,10 @@ export default {
 </style>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+</style>
+
+<style>
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap');
 </style>
 
@@ -65,6 +70,7 @@ html {
   /* font-family: Avenir, Helvetica, Arial, sans-serif; */
   // font-family: Ubuntu;
   font-family: 'Palanquin', sans-serif;
+  // font-family: 'Rubik', sans-serif;
   // font-family: 'Outfit', sans-serif;
   // font-weight: 400;
   -webkit-font-smoothing: antialiased;

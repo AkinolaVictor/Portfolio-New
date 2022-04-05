@@ -1,6 +1,6 @@
 <template>
     <div class="footer">
-        All right reserved
+        All right reserved &copy; 2022.
     </div>
 </template>
 
@@ -15,10 +15,11 @@ export default {
 .footer{
     width: 100%;
     height: 60px;
-    background: blueviolet;
+    background: #ED4AFF;
     display: flex;
     justify-content: center;
     align-items: center;
     // position: absolute;
+    color: white;
 }
 </style>

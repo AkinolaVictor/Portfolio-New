@@ -4,6 +4,9 @@
       <h1>Contact</h1>
       <p>Any questions or remarks? Write a message!!!</p>
     </div>
+    
+    <MobileContact />
+
     <div class="contact">
         <div class="contact-information">
             <div class="title" style="text-align: start">
@@ -38,22 +41,24 @@
             </div>
         </div>
 
-        <div class="contact-information-mobile">
-
-        </div>
-
         <div class="form">
-            <form action="" class="form-container">
+            <form method="POST" action="" class="form-container">
                 <div class="grid">
-                    <EachForm />
-                    <EachForm />
-                    <EachForm />
-                    <EachForm />
+                    <EachForm @bind='mutate($event)' type= 'text' name = 'First Name' />
+                    <EachForm @bind='mutate($event)' type= 'text' name = 'Last Name' />
+                    <EachForm @bind='mutate($event)' type= 'email' name = 'E-mail' />
+                    <EachForm @bind='mutate($event)' type= 'number' name = 'Phone' :req='req' />
                 </div>
                 <div class="message">
-                    <Message />
+                    <Message  @bind='mutate($event)'/>
                 </div>
-                <button @click.prevent="">send</button>
+                <!-- <div class="errorMessage" style="font-size: 12px; color: red">first name is required</div> -->
+                
+                <i v-if="waiting" class="fa-solid fa-spinner fa-spin spinner"></i>
+                <p style="font-size:12px">{{comment}}</p>
+                <button v-if="retry" type="submit" @click.prevent="sends">Retry</button>
+                <button v-if="ok" type="submit" @click.prevent="okay">Ok</button>
+                <button v-if="send" type="submit" @click.prevent="sends">send</button>
             </form>
         </div>
     </div>
@@ -64,25 +69,100 @@
 <script>
 import EachForm from '../components/Contact/EachForm.vue'
 import Message from '../components/Contact/Message.vue'
+import MobileContact from '../components/Contact/MobileContact.vue'
+import {mapActions} from 'vuex'
 
 export default {
   name: 'Projects',
   components: {
     EachForm,
-    Message
+    Message,
+    MobileContact
     // EachTimer
   },
   props: ['theme'],
   data (){
     return{
-      
+      req: true,
+      response: false,
+      waiting: false,
+      send:true,
+      retry: false,
+      ok: false,
+      comment: '',
+      formValue:{
+          FirstName:'',
+          LastName: '',
+          'E-mail': '',
+          Phone: '',
+          message: '',
+      }
     }
   },
   methods: {
+      ...mapActions(['sendMail', 'switchSent']),
+      sends(){
+          if(this.formValue.FirstName.length<1){
+              this.comment="First name is required "
+              return
+          }
+          else if(this.formValue.LastName.length<1){
+              this.comment="Last name is required"
+              return
+          }
+          else if (!this.formValue['E-mail'].includes('@') || !this.formValue['E-mail'].includes('.')){
+              this.comment="Please Enter valid Email"
+              return
+          }else if (this.formValue.message.length<1){
+              this.comment=" Message field is required"
+              return
+          }else{
+            this.send = false
+            this.retry = false
+            this.waiting = true
+            this.comment = ''
+            this.data = this.sendMail([this.formValue, this.respFunc])
+          }
+           
+        //   console.log(typeof(this.response));
+      },
+      okay(){
+            this.send=true
+            this.ok=false
+            this.comment=''
+            this.switchSent()
+      },
+      respFunc(val){
+        if(val==false){
+            // this.decision='Retry'
+            this.retry=true
+            this.waiting=false
+            this.comment = 'Message Failed to deliver, Please Retry'
+        }
 
+        if(val==true){
+            // this.decision = 'Ok';
+            let fields =  {
+                FirstName:'',
+                LastName: '',
+                'E-mail': '',
+                Phone: '',
+                message: '',
+            }
+            this.formValue = fields
+            this.waiting=false
+            this.ok=true
+            this.comment = 'Message sent'
+        }
+      },
+      mutate(data){
+          let name = data.name.split(' ')
+          this.formValue[name[0]+[name[1]]] = data.value
+        //   console.log(name[0]+[name[1]]);
+      }
   },
   mounted(){
-
+    //   this.sendMail('Value is here')
   }
   
 }
@@ -174,16 +254,17 @@ export default {
             margin-bottom: auto;
         }
 
-        .message{
-            // background: #4949F3;
-        }
+        // .message{
+        //     // background: #4949F3;
+        // }
 
         button{
             font-size: 12px;
             padding: 4px 10px;
             border: none;
             background: #4949F3;
-            margin: 10px;
+            margin: 5px 0px 10px 0;
+            // margin-bottom: 30px;
             border-radius: 4px;
             color: white;
 
@@ -203,8 +284,18 @@ export default {
         display: none;
     }
 
+    button{
+        margin: 20px;
+    }
+
     .contact-information-mobile{
-        
+        display: block;
+    //     display: flex;
+    //     justify-content: center;
+    //     align-items: center;
+    //     background: #4949F3;
+    //     width: 350px;
+    //     height: 100%;
     }
 }
 </style>

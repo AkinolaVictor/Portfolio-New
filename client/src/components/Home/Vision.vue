@@ -2,17 +2,7 @@
     <div class="vision-container">
         <div class="vision">
             <h1>Vision</h1>
-            <p>Tempora aperiam soluta quibusdam cum officiis recusandae nulla reprehenderit quos, 
-                quidem voluptatibus eaque et, consequuntur reiciendis natus veniam quas, velit fugiat cupiditate.
-                Tempora aperiam soluta quibusdam cum officiis recusandae nulla reprehenderit quos, 
-                quidem voluptatibus eaque et, consequuntur reiciendis natus veniam quas, velit fugiat cupiditate.
-                Tempora aperiam soluta quibusdam cum officiis recusandae nulla reprehenderit quos, 
-                quidem voluptatibus eaque et, consequuntur reiciendis natus veniam quas, velit fugiat cupiditate.
-                Tempora aperiam soluta quibusdam cum officiis recusandae nulla reprehenderit quos, 
-                quidem voluptatibus eaque et, consequuntur reiciendis natus veniam quas, velit fugiat cupiditate.
-                Tempora aperiam soluta quibusdam cum officiis recusandae nulla reprehenderit quos, 
-                quidem voluptatibus eaque et, consequuntur reiciendis natus veniam quas, velit fugiat cupiditate.
-                quidem voluptatibus eaque et, consequuntur reiciendis natus veniam quas, velit fugiat cupiditate.
+            <p>{{data}}
             </p>
         </div>
     </div>
@@ -21,7 +11,7 @@
 <script>
 
 export default {
-    props:['image', 'content', 'style']
+    props:['data', 'content', 'style']
 }
 </script>
 
@@ -41,7 +31,7 @@ export default {
     p{
         text-align: justify;
         // padding: 0 20px;
-        word-break: break-all;
+        // word-break: break-all;
     }
 }
 </style>

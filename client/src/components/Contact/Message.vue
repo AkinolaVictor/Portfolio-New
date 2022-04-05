@@ -1,18 +1,40 @@
 <template>
     <div class="eachForm">
-        <p>Message</p>
+        <p>Message <span style="color: red;" v-if="!req">*</span></p>
         <!-- <input type="textarea" > -->
-        <textarea name="message" id="" cols="30" rows="10"></textarea>
+        <textarea name="message" id="" cols="30" rows="10" v-model="message"></textarea>
     </div>
 </template>
 
 <script>
+import {mapGetters, mapActions} from 'vuex'
 export default {
+  props: ['req'],
   components: { },
-    name: 'Home',
-    setup() {
-        
+    data(){
+        return {
+            message: ''
+        }
     },
+    computed:{
+        ...mapGetters(['getSent']),
+    },
+    methods: {
+        ...mapActions(['switchSent']),
+        empty(){
+            this.message = ''
+        }
+    },
+    watch: {
+        message(data){
+            this.$emit('bind', {name: 'message', value: data})
+        },
+        getSent(){
+            this.getSent==true?
+            this.empty():
+            null
+        }
+    }
 }
 </script>
 
@@ -35,6 +57,8 @@ export default {
         height: 100px;
         color: rgba(0, 0, 0, 0.733);
         padding: 5px;
+        font-family: 'Rubik', sans-serif;
+        font-size: 12px;
         
         &:focus {
             outline: 1px solid rgba(0, 0, 0, 0.322);

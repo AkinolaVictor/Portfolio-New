@@ -4,50 +4,21 @@
       <h1>About</h1>
       <p>Things you'll like to know about me</p>
     </div>
-    <div class="allProjects">
+    <Spinner v-if="awaiting" />
+    <div v-else class="allProjects">
         <div class="cols">
-            <EachAbout texts = 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                    Recusandae dignissimos quidem, voluptate enim ea nam.'/>
-            <EachAbout texts = 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                    Recusandae dignissimos quidem, voluptate enim ea nam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                    Recusandae dignissimos quidem, voluptate enim ea nam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                    Recusandae dignissimos quidem, voluptate enim ea nam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                    Recusandae dignissimos quidem, voluptate enim ea nam.'/>
+            <EachAbout v-for="(item, index) in desktopView.a1" :key="index" :name="item.name" :texts="item.content"/>
         </div>
         <div class="cols">
-            <EachAbout texts = 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                    Recusandae dignissimos quidem, voluptate enim ea nam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                    Recusandae dignissimos quidem, voluptate enim ea nam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                    Recusandae dignissimos quidem, voluptate enim ea nam.'/>
-            <EachAbout texts = 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                    Recusandae dignissimos quidem, voluptate enim ea nam.'/>
+            <EachAbout v-for="(item, index) in desktopView.a2" :key="index" :name="item.name" :texts="item.content"/>
         </div>
         <div class="cols">
-            <EachAbout texts = 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                    Recusandae dignissimos quidem, voluptate enim ea nam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                    Recusandae dignissimos quidem, voluptate enim ea nam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                    Recusandae dignissimos quidem, voluptate enim ea nam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                    Recusandae dignissimos quidem, voluptate enim ea nam.'/>
-            <EachAbout texts = 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                    Recusandae dignissimos quidem, voluptate enim ea nam.'/>
+            <EachAbout v-for="(item, index) in desktopView.a3" :key="index" :name="item.name" :texts="item.content"/>
         </div>
     </div>
     <div class="allProjects-mobile">
-        <EachAbout texts = 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                Recusandae dignissimos quidem, voluptate enim ea nam.'/>
-        <EachAbout texts = 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                Recusandae dignissimos quidem, voluptate enim ea nam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                Recusandae dignissimos quidem, voluptate enim ea nam.'/>
-        <EachAbout texts = 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                Recusandae dignissimos quidem, voluptate enim ea nam.'/>
-        <EachAbout texts = 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                Recusandae dignissimos quidem, voluptate enim ea nam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                Recusandae dignissimos quidem, voluptate enim ea nam.'/>
-        <EachAbout texts = 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                Recusandae dignissimos quidem, voluptate enim ea nam.'/>
-        <EachAbout texts = 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                Recusandae dignissimos quidem, voluptate enim ea nam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                Recusandae dignissimos quidem, voluptate enim ea nam.'/>
+      <Spinner v-if="awaiting" />
+      <EachAbout v-else v-for="(item, index) in data" :key="index" :name="item.name" :texts="item.content"/>
     </div>
   </div>
 
@@ -55,23 +26,44 @@
 
 <script>
 import EachAbout from '../components/About/EachAbout.vue'
+import {mapActions, mapGetters} from 'vuex'
+import Spinner from '../components/Spinner.vue'
 
 export default {
   name: 'About',
   components: {
-    EachAbout
+    EachAbout,
+    Spinner
   },
   props: ['theme'],
   data (){
     return{
-      
+      about: ''
     }
   },
-  methods: {
-
+  computed:{
+      ...mapGetters({data: 'getAbout'}),
+      awaiting(){
+        let awaitn
+        typeof(this.data)=='object'? awaitn = false: awaitn = true;
+        return awaitn
+      },
+      desktopView(){
+        const value = { a1:[], a2:[], a3:[] }
+        let arr = Object.keys(this.data);
+        for (let i = 0; i < arr.length; i++) {
+          const count = i%3 + 1;
+            value[`a${count}`].push(this.data[arr[i]]);
+        }
+        return value
+      }
   },
-  mounted(){
-
+  methods: {
+      ...mapActions(['fetchAbout']),
+  },
+  async mounted(){
+      await this.fetchAbout();
+      // console.log(this.desktopView);
   }
   
 }

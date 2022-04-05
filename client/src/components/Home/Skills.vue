@@ -4,15 +4,11 @@
             <h1>My Skills</h1>
             <!-- <div class="allSkills"> -->
                 <div class="all">
-                    <EachSkill />
-                    <EachSkill />
-                    <EachSkill />
-                    <EachSkill />
-                    <EachSkill />
-                    <EachSkill />
-                    <EachSkill />
-                    <EachSkill />
-                    <EachSkill />
+                    <EachSkill v-for="(item, index) in data" 
+                        :key='index' :name ='item.name' 
+                        :font='item.font' 
+                        :content="item.content"
+                        />
                 </div>
             <!-- </div> -->
         </div>
@@ -24,7 +20,7 @@ import EachSkill from './EachSkill.vue'
 
 export default {
   components: { EachSkill },
-    props:['image', 'content', 'style']
+    props:['data', 'content', 'style']
 }
 </script>
 
