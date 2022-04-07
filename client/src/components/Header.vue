@@ -215,8 +215,8 @@ export default {
             .right-logo{
                 width: 35px;
                 height: 35px;
-                background: rgb(63, 61, 61);
-                border-radius: 5px;
+                // background: rgb(63, 61, 61);
+                // border-radius: 5px;
                 display: flex;
                 justify-content: center;
                 align-items: center;

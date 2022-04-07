@@ -4,7 +4,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors')
 const morgan = require('morgan')
-const {PORT} = require('./config');
+const port = require('./config');
 const bodyParser = require('body-parser');
 const firebase = require('./firebase/firebase');
 const data = require('./firebase/Data');
@@ -21,15 +21,15 @@ app.use(bodyParser.json());
 // console.log(process.env.CLIENT_ID);
 
 app.get('/', (req, res)=>{
-    return res.send(`Hello World is listening at port ${PORT}`);
+    return res.send(`Hello World is listening at port ${port}`);
 })
 
-app.get('/saveAllData', async(req, res)=>{
+app.get('/api/saveAllData', async(req, res)=>{
     await database.ref().set(data);
     return res.send(data);
 })
 
-app.get('/home', async(req, res)=>{
+app.get('/api/home', async(req, res)=>{
     database.ref('home')
     .once('value')
     .then((snapshot)=>{
@@ -42,7 +42,7 @@ app.get('/home', async(req, res)=>{
     })
 })
 
-app.get('/project', async(req, res)=>{
+app.get('/api/project', async(req, res)=>{
     database.ref('project')
     .once('value')
     .then((snapshot)=>{
@@ -55,7 +55,7 @@ app.get('/project', async(req, res)=>{
     })
 })
 
-app.get('/about', async(req, res)=>{
+app.get('/api/about', async(req, res)=>{
     database.ref('about')
     .once('value')
     .then((snapshot)=>{
@@ -68,7 +68,7 @@ app.get('/about', async(req, res)=>{
     })
 })
 
-app.post('/sendMail', async(req, res)=>{
+app.post('/api/sendMail', async(req, res)=>{
     const createTransporter = async () => {
         const oauth2Client = new OAuth2(
           process.env.CLIENT_ID,
@@ -142,4 +142,12 @@ app.post('/sendMail', async(req, res)=>{
         from: process.env.EMAIL,
     });
 })
-app.listen(PORT, ()=> console.log(`App listening at port ${PORT}`));
+
+if (process.env.NODE_ENV === 'production') {
+    // static folder
+    app.use(express.static(__dirname + '/public/'));
+
+    // handle SPA
+    app.get(/.*/, (req, res)=>res.sendFile(__dirname + '/public/index.html'));
+}
+app.listen(port, ()=> console.log(`App listening at port ${port}`));
