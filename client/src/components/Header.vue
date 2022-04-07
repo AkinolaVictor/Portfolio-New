@@ -2,11 +2,11 @@
     <div class="nav-container">
         <div class="logo">
             <div class="right-logo">
-                PT
+                <img src="/favicon.ico" style="width:35px; height: 35px; border-radius: 18px"  alt="">
             </div>
             <div class="logo-title">
                 <h4 style="margin: 0; padding: 0;">Akinola Victor</h4>
-                <span class="role">Software Dev.</span>
+                <span class="role">Dev. Portfolio</span>
             </div>
         </div>
 
@@ -101,8 +101,8 @@ export default {
         .right-logo{
             width: 35px;
             height: 35px;
-            background: rgb(63, 61, 61);
-            border-radius: 10%;
+            // background: rgb(63, 61, 61);
+            border-radius: 18px;
             display: flex;
             justify-content: center;
             align-items: center;

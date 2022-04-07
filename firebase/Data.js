@@ -154,7 +154,9 @@ const structure = {
             Email: 'soandso.gmail.com',
             message: 'The Lord is my light and my strength, whom shall i fear?'
         },
-    }
+    },
+    oldP: `A static WebApp with a beautifully designed dark theme and a nice interface, built using ReactJs.`,
+    fesshr: `A beautifully designed app that fetches images through API calls, and gives users the ability to save any image to their gallery when logged in. Built using ReactJs, Unsplash API, Google Firebase and Login Authentication.`
 }
 // console.log('ddd')
 module.exports = structure
