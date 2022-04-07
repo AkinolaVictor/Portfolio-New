@@ -20,9 +20,9 @@ app.use(bodyParser.json());
 
 // console.log(process.env.CLIENT_ID);
 
-app.get('/', (req, res)=>{
-    return res.send(`Hello World is listening at port ${port}`);
-})
+// app.get('/', (req, res)=>{
+//     return res.send(`Hello World is listening at port ${port}`);
+// })
 
 app.get('/api/saveAllData', async(req, res)=>{
     await database.ref().set(data);
